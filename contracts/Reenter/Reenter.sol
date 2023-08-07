@@ -1,6 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/utils/Address.sol";
+// @fix using ReentrancyGuard
+import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
 interface IFlashLoanEtherReceiver {
     function execute() external payable;
 }
@@ -9,12 +12,14 @@ interface IFlashLoanEtherReceiver {
  * @title Reenter
  * @author Calyptus
  */
-contract ReenterPool {
+ // @fix using ReentrancyGuard
+contract ReenterPool is ReentrancyGuard {
     using Address for address payable;
 
     mapping (address => uint256) private balances;
 
-    function deposit() external payable {
+    // @fix using ReentrancyGuard
+    function deposit() external payable nonReentrant {
         balances[msg.sender] += msg.value;
     }
 
@@ -24,7 +29,8 @@ contract ReenterPool {
         payable(msg.sender).sendValue(amountToWithdraw);
     }
 
-    function flashLoan(uint256 amount) external {
+    // @fix using ReentrancyGuard
+    function flashLoan(uint256 amount) external nonReentrant {
         uint256 balanceBefore = address(this).balance;
         require(balanceBefore >= amount, "Not enough ETH in balance");
         

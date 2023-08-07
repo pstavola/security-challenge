@@ -34,7 +34,11 @@ describe("Reenter Challenge", function () {
     this.exploit = await ReenterPoolExploit.deploy(this.pool.address);
     var poolBalance = await ethers.provider.getBalance(this.pool.address);
 
-    this.exploit.connect(bob).attack(poolBalance);    
+    //this.exploit.connect(bob).attack(poolBalance);  
+    
+    await expect(
+      this.exploit.connect(bob).attack(poolBalance)
+    ).to.be.be.revertedWith("ReentrancyGuard: reentrant call");
   });
 
   after(async function () {
