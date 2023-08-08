@@ -34,6 +34,8 @@ contract DoTrustLender is ReentrancyGuard {
         calyptusToken.transfer(borrower, borrowAmount);  
         target.functionCall(data);  
         // @audit-info this lets the caller of this function make this contract call anyone and access any function
+        // @fix setting allowance to 0
+        calyptusToken.approve(msg.sender, 0);
 
         uint256 balanceAfter = calyptusToken.balanceOf(address(this));
         require(balanceAfter >= balanceBefore, "Flash loan hasn't been paid back");
