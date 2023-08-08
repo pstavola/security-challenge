@@ -1,5 +1,7 @@
 # Smart Contract Security Challenge
 
+Check [fixed](https://github.com/pstavola/security-challenge/tree/fixed) branch for possible fixes to these vulnerabilities.
+
 ## Challenge 1
 
 ### No Privacy (Vulnerability: Accessing Private Variables)
